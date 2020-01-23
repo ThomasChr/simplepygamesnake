@@ -23,6 +23,7 @@ collecteddots = 0
 snakepath = []
 oldsnakex = snakex
 oldsnakey = snakey
+lastkey = 0
 
 while not quit:
     for event in pygame.event.get():
@@ -31,10 +32,18 @@ while not quit:
 
     # Keypresses
     pressed = pygame.key.get_pressed()
-    if pressed[pygame.K_UP]: snakey -= snakespeed
-    if pressed[pygame.K_DOWN]: snakey += snakespeed
-    if pressed[pygame.K_LEFT]: snakex -= snakespeed
-    if pressed[pygame.K_RIGHT]: snakex += snakespeed
+    if pressed[pygame.K_UP] or lastkey == pygame.K_UP:
+        lastkey = pygame.K_UP
+        snakey -= snakespeed
+    if pressed[pygame.K_DOWN] or lastkey == pygame.K_DOWN:
+        lastkey = pygame.K_DOWN
+        snakey += snakespeed
+    if pressed[pygame.K_LEFT] or lastkey == pygame.K_LEFT:
+        lastkey = pygame.K_LEFT
+        snakex -= snakespeed
+    if pressed[pygame.K_RIGHT] or lastkey == pygame.K_RIGHT:
+        lastkey = pygame.K_RIGHT
+        snakex += snakespeed
 
     # Rember old position
     if snakex != oldsnakex or snakey != oldsnakey:
@@ -96,5 +105,5 @@ while not quit:
     # Show new Screen
     pygame.display.flip()
 
-    # Wait until 1/120 second has passed
-    clock.tick(120)
+    # Wait until 1/60 second has passed
+    clock.tick(60)
